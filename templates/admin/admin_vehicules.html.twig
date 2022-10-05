@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Gestion des Véhicules{% endblock %}
+
+{% block body %}
+    <h1>BACKOFFICE - GESTION DES VEHICULES</h1>
+
+<a class="btn btn-success mt-2 col-12" href="{{ path('admin_new_article') }}">Ajouter un article</a>
+<table class="table table-bordered text-center">
+
+<thead>
+  <tr>
+    {% for data in colonnes %}
+      <th>{{ data }}</th>
+    {% endfor %}
+    <th>Catégorie</th>
+    <th>Editer</th>
+    <th>Supprimer</th>
+  </tr>
+</thead>
+<tbody>
+  {% for item in articles %}
+    <tr>
+      <td>{{ item.id }}</td>
+      <td>{{ item.title }}</td>
+      <td>{{ item.content|raw }}</td>
+      <td><img src="{{ item.image }}" alt="" style="width: 150px"></td>
+      <td>{{ item.createdAt|date('d/m/Y à H:i:s') }}</td>
+      <td>{{ item.category.title }}</td>
+      <td>
+        <a href="{{ path('admin_edit_article', {id: item.id}) }}" class="text-dark">
+          <i class='fas fa-edit' style='font-size:24px'></i>
+        </a>
+      </td>
+      <td> 
+        <a onclick="return confirm('Voulez-vous supprimer cet article ?')" href="{{ path('admin_delete_article', {id: item.id}) }}" class="text-dark">
+          <i class='fas fa-trash' style='font-size:24px'></i>
+        </a>
+      </td>
+    </tr>
+  {% endfor %}
+</tbody>
+
+</table>
+{% endblock %}
