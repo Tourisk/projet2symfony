@@ -7,8 +7,7 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VehiculeRepository;
-use phpDocumentor\Reflection\Types\Integer;
-
+use Symfony\Component\Validator\Constraints as Assert;
 #[ORM\Entity(repositoryClass: VehiculeRepository::class)]
 class Vehicule
 {
@@ -18,22 +17,28 @@ class Vehicule
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $titre = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $marque = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $modele = null;
 
     #[ORM\Column(type: Types::TEXT)]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $photo = null;
 
     #[ORM\Column(length: 255)]
-    private ?integer $prix_journalier = null;
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
+    private ?string $prix_journalier = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_enregistrement = null;

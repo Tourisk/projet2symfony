@@ -1,18 +1,14 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}AgenceLoc{% endblock %}
+{% block title %}Véhicule !{% endblock %}
 
 {% block body %}
 
 <section class="row articles">
-{% for show in shows %}
 <article class="col-md-8 mx-auto text-center border border-dark mb-3 p-3 mt-3 mr-1">
       <h2>{{ show.titre }}</h2>
   <div class="row justify-content-center">
-    <div class="col-3">
         <img class="img-fluid" src="{{ show.photo }}" alt="" width="250px">
-    </div>
-    <div class="col-5">
       <div class="metadata">
         Ajouté le {{ show.getDateEnregistrement |date('d/m/Y') }}
         <div class="content">
@@ -23,16 +19,12 @@
           <div class="col">
             <b>Prix journalier:</b> {{ show.getPrixJournalier }} €</div>
           <div class="col">
-            <b>Description:</b> {{ show.description|raw }}</div>
-        </div>
+            <b>Description:</b><br> {{ show.description|raw }}</div>
+        </div><hr>
       </div>
-    </div>
-    <a href="{{ path('app_show', {id: show.id}) }}" class="btn btn-dark">Voir les détails</a>
+    <a href="#" class="btn btn-success">Page de réservation</a>
   </div>
 </article>
-{% endfor %}
 </section>
-
-
 
 {% endblock %}

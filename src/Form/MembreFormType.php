@@ -13,7 +13,7 @@ use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 
-class RegistrationFormType extends AbstractType
+class MembreFormType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
@@ -59,14 +59,14 @@ class RegistrationFormType extends AbstractType
                     'Autre'=> "T"
                 ]
             ])
-            // ->add('roles', ChoiceType::class, [
-            //     'choices'=> [
-            //         'Admin'=> "ROLE_ADMIN",
-            //         'Membre'=> "ROLE_USER"
-            //     ],
-            //         'expanded'=>true,
-            //         'multiple'=>true
-            // ])
+            ->add('roles', ChoiceType::class, [
+                'choices'=> [
+                    'Admin'=> "ROLE_ADMIN",
+                    'Membre'=> "ROLE_USER"
+                ],
+                    'expanded'=>true,
+                    'multiple'=>true
+            ])
 
             // ->add('date_enregistrement')
         ;

@@ -9,6 +9,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: MembreRepository::class)]
 class Membre implements UserInterface, PasswordAuthenticatedUserInterface
@@ -28,21 +29,27 @@ class Membre implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $pseudo = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $nom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $civilite = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?\DateTimeInterface $date_enregistrement = null;
 
     #[ORM\OneToMany(mappedBy: 'membre', targetEntity: Commande::class, orphanRemoval: true)]
@@ -93,9 +100,10 @@ class Membre implements UserInterface, PasswordAuthenticatedUserInterface
      */
     public function getRoles(): array
     {
-        $roles = $this->roles;
+        $roles=$this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
+        // $roles[1] = 'ROLE_ADMIN';
 
         return array_unique($roles);
     }

@@ -3,43 +3,113 @@
 {% block title %}Gestion des Véhicules{% endblock %}
 
 {% block body %}
-    <h1>BACKOFFICE - GESTION DES VEHICULES</h1>
-
-<a class="btn btn-success mt-2 col-12" href="{{ path('admin_new_article') }}">Ajouter un article</a>
+  <h1>
+  BACKOFFICE - GESTION DES VEHICULES
+  {% if editMode %}
+	- Edition
+  {% else %}
+	- Vue / Ajout
+      {% endif %}
+  </h1>
 <table class="table table-bordered text-center">
-
 <thead>
   <tr>
-    {% for data in colonnes %}
-      <th>{{ data }}</th>
-    {% endfor %}
-    <th>Catégorie</th>
-    <th>Editer</th>
-    <th>Supprimer</th>
+    <th>#</th>
+    <th>Titre</th>
+    <th>Marque</th>
+    <th>Modèle</th>
+    <th>Description</th>
+    <th>Photo</th>
+    <th>Prix / jrs</th>
+    <th>Date d'enregistrement</th>
+    <th>Actions</th>
   </tr>
 </thead>
 <tbody>
-  {% for item in articles %}
-    <tr>
+  {% for item in vehicules %}
+    <tr class="align-middle">
       <td>{{ item.id }}</td>
-      <td>{{ item.title }}</td>
-      <td>{{ item.content|raw }}</td>
-      <td><img src="{{ item.image }}" alt="" style="width: 150px"></td>
-      <td>{{ item.createdAt|date('d/m/Y à H:i:s') }}</td>
-      <td>{{ item.category.title }}</td>
+      <td>{{ item.titre }}</td>
+      <td>{{ item.marque }}</td>
+      <td>{{ item.modele }}</td>
+      <td>{{ item.description|raw }}</td>
+      <td><img src="{{ item.photo }}" alt="" style="width: 150px"></td>
+      <td>{{ item.getPrixJournalier }}</td>
+      <td>{{ item.getDateEnregistrement|date('d/m/Y à H:i:s') }}</td>
       <td>
-        <a href="{{ path('admin_edit_article', {id: item.id}) }}" class="text-dark">
+        <a href=" {{ path('admin_edit_vehicule', {id: item.id}) }} " class="text-dark" style=" text-decoration:none">
+          <i class='fas fa-search' style='font-size:24px'></i>
+        </a>
+        <a href=" {{ path('admin_edit_vehicule', {id: item.id}) }} " class="text-dark" style=" text-decoration:none">
           <i class='fas fa-edit' style='font-size:24px'></i>
         </a>
-      </td>
-      <td> 
-        <a onclick="return confirm('Voulez-vous supprimer cet article ?')" href="{{ path('admin_delete_article', {id: item.id}) }}" class="text-dark">
+        <a onclick="return confirm('Voulez-vous supprimer ce véhicule ?')" href="{{ path('admin_delete_vehicule', {id: item.id}) }}" class="text-dark" style=" text-decoration:none">
           <i class='fas fa-trash' style='font-size:24px'></i>
         </a>
       </td>
     </tr>
   {% endfor %}
 </tbody>
-
 </table>
+<hr>
+  <div class="text-center">
+      {% if editMode %}
+	<h1 class="text-center text-warning">Edition</h1>
+      {% else %}
+	<h1 class="text-center text-info">Ajout véhicule</h1>
+      {% endif %}
+  </div>
+
+{{ form_start(form, {
+  attr: {novalidate: 'novalidate'
+}}) }}
+  <div class="container">
+    <div class="row col-12">
+      <div class="col">
+      {{ form_row(form.titre, {
+        label: 'Titre'
+      }) }}
+      </div>
+      <div class="col">
+      {{ form_row(form.marque, {
+        label: 'Marque'
+      }) }}
+      </div>
+      <div class="col">
+      {{ form_row(form.modele, {
+        label: 'Modèle'
+      }) }}
+      </div>
+      <div class="col">
+      {{ form_row(form.prix_journalier, {
+        label: 'Prix'
+      }) }}
+      </div>
+    <div class="row col-12">
+    <div class="col">
+      {{ form_row(form.photo, {
+        label: 'Photo'
+      }) }}
+      </div>
+      <div class="col">
+      {{ form_row(form.description, {
+        label: 'Description'
+      }) }}
+      </div>
+    </div>
+  </div>
+  <div class="text-center">
+      {% if editMode %}
+      <button type="submit" class="btn btn-warning mt-2 mb-2 col-12">
+        Enregistrer les modifications
+      </button>
+      {% else %}
+      <button type="submit" class="btn btn-info mt-2 mb-2 col-12">
+        Ajouter le véhicule
+      </button>
+      {% endif %}
+
+  </div>
+{{ form_end(form) }}
+
 {% endblock %}
