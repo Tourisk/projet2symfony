@@ -29,7 +29,6 @@ class Membre implements UserInterface, PasswordAuthenticatedUserInterface
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $password = null;
 
     #[ORM\Column(length: 255)]
@@ -49,7 +48,6 @@ class Membre implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $civilite = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?\DateTimeInterface $date_enregistrement = null;
 
     #[ORM\OneToMany(mappedBy: 'membre', targetEntity: Commande::class, orphanRemoval: true)]

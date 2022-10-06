@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Commande;
 use App\Form\CommandeFormType;
+use App\Repository\MembreRepository;
 use App\Repository\VehiculeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -32,34 +33,42 @@ public function appShow($id, VehiculeRepository $repo): Response
         'show'=> $vehicule
     ]);
 }
+//---------------------------------------------------------------------------------------------------------------------------------------
+// #[Route('/membre/{id}', name: 'app_show')]
+// public function appMembre($id, MembreRepository $repo): Response
+// {
+//     $membre=$repo->find($id);
+//     return $this->render('app/membre.html.twig', [
+//         'membre'=> $membre
+//     ]);
+// }
+// #[Route('/commande/new', name: 'reservation')]
+// public function adminFormVehicule($id, VehiculeRepository $repo, Request $globals, EntityManagerInterface $manager, Commande $commande = null)
+// {
+//     $reservations=$repo->find($id);
+//     if($commande == null) {
+//         $commande= new Commande;
+//         $commande->setDateEnregistrement(new \DateTime);
+//     }
 
-#[Route('/commande/new', name: 'reservation')]
-public function adminFormVehicule($id, VehiculeRepository $repo, Request $globals, EntityManagerInterface $manager, Commande $commande = null)
-{
-    $reservations=$repo->find($id);
-    if($commande == null) {
-        $commande= new Commande;
-        $commande->setDateEnregistrement(new \DateTime);
-    }
+//     $form=$this->createForm(CommandeFormType::class, $commande);
 
-    $form=$this->createForm(CommandeFormType::class, $commande);
+//     $form->handleRequest($globals);
 
-    $form->handleRequest($globals);
+//     if($form->isSubmitted() && $form->isValid()) {
+//         $manager->persist($commande);
+//         $manager->flush();
+//         $this->addFlash('success', "Le véhicule a bien été édité / enregistré !");
 
-    if($form->isSubmitted() && $form->isValid()) {
-        $manager->persist($commande);
-        $manager->flush();
-        $this->addFlash('success', "Le véhicule a bien été édité / enregistré !");
-
-        return $this->redirectToRoute('admin_vehicules');
-    }
-    return $this->renderForm('app/commandes.html.twig', [
-        'form'=> $form,
-        'reservations' => $reservations
-    ]);
+//         return $this->redirectToRoute('admin_vehicules');
+//     }
+//     return $this->renderForm('app/commandes.html.twig', [
+//         'form'=> $form,
+//         'reservations' => $reservations
+//     ]);
    
-    return ;
-}
+//     return ;
+// }
 
 
 
