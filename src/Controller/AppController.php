@@ -26,100 +26,40 @@ public function indexApp(VehiculeRepository $repo): Response
 }
 //---------------------------------------------------------------------------------------------------------------------------------------
 #[Route('/show/{id}', name: 'app_show')]
-public function appShow($id, VehiculeRepository $repo): Response
+public function appShow($id, VehiculeRepository $repo, Request $globals, EntityManagerInterface $manager, Commande $commande = null): Response
 {
     $vehicule=$repo->find($id);
-    return $this->render('app/show.html.twig', [
+
+    if($commande == null) {
+        $commande= new Commande;
+        $commande->setDateEnregistrement(new \DateTime);
+    }
+
+    $form=$this->createForm(CommandeFormType::class, $commande);
+
+    $form->handleRequest($globals);
+
+    if($form->isSubmitted() && $form->isValid()) {
+        $manager->persist($commande);
+        $manager->flush();
+        $this->addFlash('success', "Le véhicule a bien été réserver !");
+
+        return $this->redirectToRoute('app_index');
+    }
+    return $this->renderForm('app/show.html.twig', [
+        'formCommande'=> $form,
         'show'=> $vehicule
     ]);
 }
 //---------------------------------------------------------------------------------------------------------------------------------------
-// #[Route('/membre/{id}', name: 'app_show')]
-// public function appMembre($id, MembreRepository $repo): Response
-// {
-//     $membre=$repo->find($id);
-//     return $this->render('app/membre.html.twig', [
-//         'membre'=> $membre
-//     ]);
-// }
-// #[Route('/commande/new', name: 'reservation')]
-// public function adminFormVehicule($id, VehiculeRepository $repo, Request $globals, EntityManagerInterface $manager, Commande $commande = null)
-// {
-//     $reservations=$repo->find($id);
-//     if($commande == null) {
-//         $commande= new Commande;
-//         $commande->setDateEnregistrement(new \DateTime);
-//     }
-
-//     $form=$this->createForm(CommandeFormType::class, $commande);
-
-//     $form->handleRequest($globals);
-
-//     if($form->isSubmitted() && $form->isValid()) {
-//         $manager->persist($commande);
-//         $manager->flush();
-//         $this->addFlash('success', "Le véhicule a bien été édité / enregistré !");
-
-//         return $this->redirectToRoute('admin_vehicules');
-//     }
-//     return $this->renderForm('app/commandes.html.twig', [
-//         'form'=> $form,
-//         'reservations' => $reservations
-//     ]);
-   
-//     return ;
-// }
-
-
-
-
-
+#[Route('/membre/{id}', name: 'app_membre')]
+public function appMembre($id, MembreRepository $repo): Response
+{
+    $membre=$repo->find($id);
+    return $this->render('app/membre.html.twig', [
+        'membre'=> $membre
+    ]);
+}
 //---------------------------------------------------------------------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-//---------------------------------------------------------------------------------------------------------------------------------------
-//---------------------------------------------------------------------------------------------------------------------------------------
-//show id details + formulaire de reservation
-//profils avec historique de commande
-// #[Route('/commande', name: 'commande')]
-// #[Route('/commande/new', name: 'new_commande')]
-// public function adminFormVehicule(CommandeRepository $repo, Request $globals, EntityManagerInterface $manager, Commande $commande = null)
-// {
-//     $commandes=$repo->findAll();
-//     if($commande == null) {
-//         $commande= new Commande;
-//         $commande->setDateEnregistrement(new \DateTime);
-//     }
-
-//     $form=$this->createForm(CommandeFormType::class, $commande);
-
-//     $form->handleRequest($globals);
-
-//     if($form->isSubmitted() && $form->isValid()) {
-//         $manager->persist($commande);
-//         $manager->flush();
-//         $this->addFlash('success', "La commande a bien été enregistré !");
-
-//         //changer vers l'historique ou profil
-//         return $this->redirectToRoute('commande');
-//     }
-//     return $this->renderForm('app/commande.html.twig', [
-//         'form'=> $form,
-//         'commandes' => $commandes,
-//         'editMode'=> $commande->getId() !== null
-//     ]);
-   
-//     return ;
-// }
-
 
 }

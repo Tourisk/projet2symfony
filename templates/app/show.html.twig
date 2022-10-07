@@ -22,7 +22,17 @@
             <b>Description:</b><br> {{ show.description|raw }}</div>
         </div><hr>
       </div>
-    <a href="#" class="btn btn-success">Page de réservation</a>
+
+  {% if app.user %}
+    {{ form_start(formCommande) }}
+         {{ form_row(formCommande.date_heure_depart) }}
+        {{ form_row(formCommande.date_heure_fin) }}
+    <button type="submit" class="btn btn-success col-12 mt-3">Réservation - En construction</button>
+    {{ form_end(formCommande) }}
+  {% else %}
+    <a href="{{ path('app_login') }}">Cliquez ici</a> pour vous connecter et réserver.
+  {% endif %}
+
   </div>
 </article>
 </section>

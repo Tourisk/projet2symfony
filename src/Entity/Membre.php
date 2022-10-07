@@ -20,6 +20,7 @@ class Membre implements UserInterface, PasswordAuthenticatedUserInterface
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $email = null;
 
     #[ORM\Column]

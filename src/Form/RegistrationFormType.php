@@ -59,14 +59,14 @@ class RegistrationFormType extends AbstractType
                     'Autre'=> "T"
                 ]
             ])
-            // ->add('roles', ChoiceType::class, [
-            //     'choices'=> [
-            //         'Admin'=> "ROLE_ADMIN",
-            //         'Membre'=> "ROLE_USER"
-            //     ],
-            //         'expanded'=>true,
-            //         'multiple'=>true
-            // ])
+            ->add('roles', ChoiceType::class, [
+                'choices'=> [
+                    'Admin'=> "ROLE_ADMIN",
+                    'Membre'=> "ROLE_USER"
+                ],
+                    'expanded'=>true,
+                    'multiple'=>true
+            ])
 
             // ->add('date_enregistrement')
         ;

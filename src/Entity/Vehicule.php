@@ -8,6 +8,7 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\VehiculeRepository;
 use Symfony\Component\Validator\Constraints as Assert;
+
 #[ORM\Entity(repositoryClass: VehiculeRepository::class)]
 class Vehicule
 {
@@ -38,6 +39,7 @@ class Vehicule
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
+    #[Assert\Regex(pattern:"/^\d{1,}$/", message:"Bizarre ce prix.")]
     private ?string $prix_journalier = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

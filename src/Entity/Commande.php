@@ -24,11 +24,9 @@ class Commande
     private ?\DateTimeInterface $date_heure_fin = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $prix_total = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?\DateTimeInterface $date_enregistrement = null;
 
     #[ORM\ManyToOne(inversedBy: 'commandes')]
