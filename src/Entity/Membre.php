@@ -45,7 +45,6 @@ class Membre implements UserInterface, PasswordAuthenticatedUserInterface
     private ?string $prenom = null;
 
     #[ORM\Column(length: 255)]
-    #[Assert\NotBlank(message:"Ce champ ne peut pas être vide.")]
     private ?string $civilite = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]

@@ -97,9 +97,9 @@ public function adminFormMembre(MembreRepository $repo, Request $globals, Entity
 }
 //---------------------------------------------------------------------------------------------------------------------------------------
 #[Route('/admin/membre/delete/{id}', name: 'admin_delete_membre')]
-public function adminDeleteMembre(Membre $vehicule, EntityManagerInterface $manager)
+public function adminDeleteMembre(Membre $membre, EntityManagerInterface $manager)
 {
-    $manager->remove($vehicule);
+    $manager->remove($membre);
     $manager->flush();
 
     return $this->redirectToRoute('admin_membres');
